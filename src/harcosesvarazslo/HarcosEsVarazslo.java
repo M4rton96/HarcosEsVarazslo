@@ -4,44 +4,40 @@
  */
 package harcosesvarazslo;
 
-import java.util.Random;
-
 public class HarcosEsVarazslo {
-
-    static Random random = new Random();
-
-    public static int d6() {
-        return random.nextInt(6) + 1;
+    
+    static String eleterok(Harcos harcos, Varazslo varazslo) {
+        return harcos.monogram + ":" + harcos.eletero + ", " + varazslo.monogram + ":" + varazslo.eletero;
     }
 
     public static void main(String[] args) {
-        int harcosEletero = d6() + 3;
-        int varazsloEletero = d6() + 3;
 
-        System.out.println("H_V --> H:" + harcosEletero + ", V:" + varazsloEletero);
+        Harcos harcos = new Harcos('H');
+        Varazslo varazslo = new Varazslo('V');
 
-        while (harcosEletero > 0 && varazsloEletero > 0) {
-            int harcosLepes = random.nextInt(3);
-            int varazsloLepes = random.nextInt(3);
+        String alapAllas = harcos.monogram + "_" + varazslo.monogram;
+
+        System.out.println(alapAllas + " --> " + eleterok(harcos, varazslo));
+
+        while (harcos.eletero > 0 && varazslo.eletero > 0) {
+            StringBuilder allas = new StringBuilder("___");
+
+            int harcosLepes = harcos.lep();
+            int varazsloLepes = varazslo.lep();
 
             if (harcosLepes == varazsloLepes) {
-                StringBuilder harcAllas = new StringBuilder("___");
-                harcAllas.setCharAt(harcosLepes, 'X');
-                
-                int harcosSebzes = d6();
-                int varazsloSebzes = d6();
-                
-                harcosEletero -= varazsloSebzes;
-                varazsloEletero -= harcosSebzes;
-                
-                System.out.println(harcAllas + " harc: --> H:" + harcosEletero + ", V:" + varazsloEletero);
-            } else {
-                StringBuilder allas = new StringBuilder("___");
-                
-                allas.setCharAt(harcosLepes, 'H');
-                allas.setCharAt(varazsloLepes, 'V');
+                allas.setCharAt(harcosLepes, 'X');
 
-                System.out.println(allas + " --> H:" + harcosEletero + ", V:" + varazsloEletero);
+                harcos.eletero -= varazslo.sebez();
+                varazslo.eletero -= harcos.sebez();
+
+                System.out.println(allas + " --> harc: " + eleterok(harcos, varazslo));
+            } else {
+
+                allas.setCharAt(harcosLepes, harcos.monogram);
+                allas.setCharAt(varazsloLepes, varazslo.monogram);
+
+                System.out.println(allas + " --> " + eleterok(harcos, varazslo));
             }
         }
     }
