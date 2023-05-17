@@ -22,7 +22,7 @@ public class Jatekos {
     }
     
     int sebez() {
-        d6();
+        return d6();
     }
 
     int d6() {
