@@ -5,7 +5,7 @@
 package harcosesvarazslo;
 
 public class HarcosEsVarazslo {
-    
+
     static String eleterok(Harcos harcos, Varazslo varazslo) {
         return harcos.monogram + ":" + harcos.eletero + ", " + varazslo.monogram + ":" + varazslo.eletero;
     }
@@ -39,6 +39,14 @@ public class HarcosEsVarazslo {
 
                 System.out.println(allas + " --> " + eleterok(harcos, varazslo));
             }
+        }
+
+        try {
+            if (harcos.eletero <= 0 && varazslo.eletero <= 0) {
+                throw new DontetlenKivetel("A jatekosok elete egyszerre fogyott el");
+            }
+        } catch (DontetlenKivetel e) {
+            System.out.println("Dontetlen! (indok: " + e.getMessage() + ")");
         }
     }
 
